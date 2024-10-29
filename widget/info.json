@@ -1,0 +1,26 @@
+{
+    "name": "killchainphases",
+    "title": "Kill Chain Phases",
+    "subTitle": "Indicator kill chain phases",
+    "version": "1.0.0",
+    "publishedDate": 1730108585,
+    "releaseNotes": "unavailable",
+    "metadata": {
+        "description": "Show count of Indicator kill chain phases",
+        "pages": [
+            "Dashboard",
+            "View Panel",
+            "Reports",
+            "Listing"
+        ],
+        "certified": "No",
+        "publisher": null,
+        "compatibility": [
+            "7.4.3"
+        ],
+        "category": [
+            "Threat Intelligence"
+        ]
+    },
+    "development": false
+}
