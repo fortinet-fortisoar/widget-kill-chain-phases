@@ -13,10 +13,10 @@
             "Reports",
             "Listing"
         ],
-        "certified": "No",
-        "publisher": null,
+        "certified": "Yes",
+        "publisher": "Fortinet",
         "compatibility": [
-            "7.4.3"
+            "7.6.1"
         ],
         "category": [
             "Threat Intelligence"
