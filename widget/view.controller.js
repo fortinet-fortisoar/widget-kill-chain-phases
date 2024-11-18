@@ -8,12 +8,13 @@ Copyright end */
     .module('cybersponse')
     .controller('killchainphases100Ctrl', killchainphases100Ctrl);
 
-  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope'];
+  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService'];
 
-  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope) {
+  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService) {
     var loadedSVGDocument;
     var svgLoaded = false;
     var fontFamily = '\'Lato\', sans-serif';
+    $scope.mapKillChainStagesData = mapKillChainStagesData;
 
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
@@ -21,6 +22,40 @@ Copyright end */
           // Create your translating static string variables here
         };
       });
+    }
+
+
+    // to create the topkillchainstage object to be passed to the topkillchain widget config
+    function mapKillChainStagesData(data) {
+      let _dataArray = []; //need to remove incase of bulk 
+      _dataArray.push(data);
+      // Create an object to store the count of each tag
+      const killChainCounts = {
+        'reconnaissance': 0,
+        'weaponization': 0,
+        'delivery': 0,
+        'exploitation': 0,
+        'installation': 0,
+        'command-and-control': 0,
+        'actions': 0
+      };
+      // Loop through each object in the data array and update the killChainCounts object
+      _dataArray.forEach(item => {
+        item.forEach(stage => {
+          killChainCounts[stage] = (killChainCounts[stage] || 0) + 1;
+        });
+      });
+
+      // Convert the killChainCounts object into an array of objects with tag and count properties
+      const result = Object.keys(killChainCounts).map(stage => ({
+        tag: killchainPhasesService.mapKillChainStageData(stage).tag, //displayName
+        count: killChainCounts[stage],
+        //color: killchainPhasesService.mapKillChainStageData(stage).color,
+        //icon: killchainPhasesService.mapKillChainStageData(stage).icon,
+        id: killchainPhasesService.mapKillChainStageData(stage).id
+      }));
+
+      return result;
     }
 
     function checkForSVGLoad() {
@@ -35,7 +70,6 @@ Copyright end */
 
       });
     }
-
 
     function addLabelCounts(element) {
       var source = loadedSVGDocument.getElementById(element.id);
@@ -99,12 +133,13 @@ Copyright end */
       $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
       if ($scope.config.embedded) {
         $scope.embedded = true;
-        $scope.topKillChainStages = $scope.config.data;
+        $scope.topKillChainStages = mapKillChainStagesData($scope.config.data);
+
+        setTimeout(() => {
+          checkForSVGLoad();
+        }, 10);
       }
 
-      setTimeout(() => {
-        checkForSVGLoad();
-      }, 10);
     }
 
     init();
