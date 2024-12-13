@@ -14,6 +14,10 @@ Copyright end */
     var loadedSVGDocument;
     var svgLoaded = false;
     var fontFamily = '\'Lato\', sans-serif';
+    $scope.currentTheme = $rootScope.theme.id;
+    var countColor = $scope.currentTheme === 'light' ? '#000000' : '#F4CC46';
+    var labelColor = $scope.currentTheme === 'light' ? '#000000' : '#FFF';
+
     $scope.mapKillChainStagesData = mapKillChainStagesData;
 
     function _handleTranslations() {
@@ -88,10 +92,10 @@ Copyright end */
       var countDiv = document.createElement('div');
       countDiv.setAttribute('class', element.id);
       if ($scope.currentTheme === 'light') {
-        countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        countDiv.setAttribute('style', 'color: ' + countColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
       else {
-        countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        countDiv.setAttribute('style', 'color: ' + countColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
       countDiv.innerHTML = element.count;
       labelElem.appendChild(countDiv);
@@ -115,10 +119,10 @@ Copyright end */
       var countDiv = document.createElement('div');
       countDiv.setAttribute('class', element.id + 'Label');
       if ($scope.currentTheme === 'light') {
-        countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        countDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
       else {
-        countDiv.setAttribute('style', 'color: ' + $scope.textColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        countDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
       countDiv.innerHTML = $filter('camelCaseToHuman')(element.tag);
       labelElem.appendChild(countDiv);
@@ -128,16 +132,17 @@ Copyright end */
     function init() {
       // To handle backward compatibility for widget
       _handleTranslations();
-      $scope.currentTheme = $rootScope.theme.id;
-      $scope.textColor = $scope.currentTheme === 'light' ? '#000000' : '#FFFFFF';
-      $scope.hoverColor = $scope.currentTheme === 'light' ? '#000000' : '#36b9b0';
+  
       if ($scope.config.embedded) {
         $scope.embedded = true;
         $scope.topKillChainStages = mapKillChainStagesData($scope.config.data);
-
         setTimeout(() => {
           checkForSVGLoad();
         }, 10);
+      }
+      else{
+        $scope.embedded = false;
+        $scope.topKillChainStages = $scope.config.killchainDataJson;
       }
 
     }
