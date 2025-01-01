@@ -18,8 +18,6 @@ Copyright end */
     var countColor = $scope.currentTheme === 'light' ? '#000000' : '#F4CC46';
     var labelColor = $scope.currentTheme === 'light' ? '#000000' : '#FFF';
 
-    $scope.mapKillChainStagesData = mapKillChainStagesData;
-
     function _handleTranslations() {
       widgetUtilityService.checkTranslationMode($scope.$parent.model.type).then(function () {
         $scope.viewWidgetVars = {
@@ -28,37 +26,13 @@ Copyright end */
       });
     }
 
-
-    // to create the topkillchainstage object to be passed to the topkillchain widget config
-    function mapKillChainStagesData(data) {
-      let _dataArray = []; //need to remove incase of bulk 
-      _dataArray.push(data);
-      // Create an object to store the count of each tag
-      const killChainCounts = {
-        'reconnaissance': 0,
-        'weaponization': 0,
-        'delivery': 0,
-        'exploitation': 0,
-        'installation': 0,
-        'command-and-control': 0,
-        'actions': 0
-      };
-      // Loop through each object in the data array and update the killChainCounts object
-      _dataArray.forEach(item => {
-        item.forEach(stage => {
-          killChainCounts[stage] = (killChainCounts[stage] || 0) + 1;
-        });
-      });
-
-      // Convert the killChainCounts object into an array of objects with tag and count properties
-      const result = Object.keys(killChainCounts).map(stage => ({
+    //map the killchain data to display the details on SVG
+    function mapKillChainStagesData(killChainData) {
+      const result = Object.keys(killChainData).map(stage => ({
         tag: killchainPhasesService.mapKillChainStageData(stage).tag, //displayName
-        count: killChainCounts[stage],
-        //color: killchainPhasesService.mapKillChainStageData(stage).color,
-        //icon: killchainPhasesService.mapKillChainStageData(stage).icon,
-        id: killchainPhasesService.mapKillChainStageData(stage).id
+        count: killChainData[stage],
+        id: killchainPhasesService.mapKillChainStageData(stage).id //to be mapped with SVG id
       }));
-
       return result;
     }
 
@@ -70,11 +44,10 @@ Copyright end */
           addLabelCounts(element);
           addLabel(element)
         });
-        //console.log("loaded", $scope.topKillChainStages);
-
       });
     }
 
+    //map the killchain id to display the kill chain phases count
     function addLabelCounts(element) {
       var source = loadedSVGDocument.getElementById(element.id);
       source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
@@ -102,6 +75,7 @@ Copyright end */
       source.after(labelElem);
     }
 
+    //map the killchain id to display the kill chain phases
     function addLabel(element) {
       var source = loadedSVGDocument.getElementById(element.id + 'Label');
       source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
@@ -132,19 +106,17 @@ Copyright end */
     function init() {
       // To handle backward compatibility for widget
       _handleTranslations();
-  
-      if ($scope.config.embedded) {
+      if ($scope.config.embedded) { //display the data if widget is embedded
         $scope.embedded = true;
         $scope.topKillChainStages = mapKillChainStagesData($scope.config.data);
         setTimeout(() => {
           checkForSVGLoad();
         }, 10);
       }
-      else{
+      else { //display the data from widget config 
         $scope.embedded = false;
         $scope.topKillChainStages = $scope.config.killchainDataJson;
       }
-
     }
 
     init();

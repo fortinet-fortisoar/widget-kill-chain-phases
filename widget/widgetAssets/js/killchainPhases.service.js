@@ -24,37 +24,37 @@ Copyright end */
       }
       switch (stage.toLowerCase().trim()) {
         case 'reconnaissance':
-          return {'tag': 'Reconnaissance', 'color': 'yellow', 'icon':'fa fa-binoculars', 'id': 'recon' };
+          return {'tag': 'Reconnaissance', 'id': 'recon' };
           break;
         case 'weaponization':
-          return {'tag': 'Weaponization', 'color': 'yellow', 'icon':'fa fa-mic', 'id': 'weaponize'};
+          return {'tag': 'Weaponization', 'id': 'weaponize'};
           break;
         case 'delivery':
-          return {'tag': 'Delivery', 'color': 'yellow', 'icon':'fa fa-mic', 'id': 'deliver'};
+          return {'tag': 'Delivery', 'id': 'deliver'};
           break;
         case 'exploitation':
-          return {'tag': 'Exploitation', 'color': 'orange', 'icon':'fa fa-mic', 'id': 'exploit'};
+          return {'tag': 'Exploitation', 'id': 'exploit'};
           break;
         case 'installation':
-          return {'tag': 'Installation', 'color': 'orange', 'icon':'fa fa-download', 'id': 'install'};
+          return {'tag': 'Installation', 'id': 'install'};
           break;
         case 'execute':
-          return {'tag': 'Installation', 'color': 'orange', 'icon':'fa fa-download', 'id': 'install'};
+          return {'tag': 'Installation', 'id': 'install'};
           break;
         case 'command-and-control':
-          return {'tag': 'Command & Control', 'color': 'red', 'icon':'fa fa-laptop', 'id': 'control'};
+          return {'tag': 'Command & Control', 'id': 'control'};
         case 'post-infection':
-          return {'tag': 'Actions', 'color': 'red', 'icon':'fa fa-mic', 'id': 'actions'};
+          return {'tag': 'Actions', 'id': 'actions'};
           break;
         case 'postinfection':
-          return {'tag': 'Actions', 'color': 'red', 'icon':'fa fa-mic', 'id': 'actions'};
+          return {'tag': 'Actions', 'id': 'actions'};
           break;
         case 'actions':
-          return {'tag': 'Actions', 'color': 'red', 'icon':'fa fa-mic', 'id': 'actions'};
+          return {'tag': 'Actions', 'id': 'actions'};
           break;
         case 'unknown':
         default:
-          return {'tag': '', 'color': '', 'icon':'', 'id': ''};
+          return {'tag': '', 'id': ''};
 
       }
     }
