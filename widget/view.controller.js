@@ -109,14 +109,14 @@ Copyright end */
       if ($scope.config.embedded) { //display the data if widget is embedded
         $scope.embedded = true;
         $scope.topKillChainStages = mapKillChainStagesData($scope.config.data);
-        setTimeout(() => {
-          checkForSVGLoad();
-        }, 10);
       }
       else { //display the data from widget config 
         $scope.embedded = false;
-        $scope.topKillChainStages = $scope.config.killchainDataJson;
+        $scope.topKillChainStages = mapKillChainStagesData($scope.config.killchainDataJson);
       }
+      setTimeout(() => {
+        checkForSVGLoad();
+      }, 10);
     }
 
     init();
