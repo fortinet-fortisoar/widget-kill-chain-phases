@@ -38,24 +38,15 @@ Copyright end */
         case 'installation':
           return {'tag': 'Installation', 'id': 'install'};
           break;
-        case 'execute':
-          return {'tag': 'Installation', 'id': 'install'};
-          break;
         case 'command-and-control':
           return {'tag': 'Command & Control', 'id': 'control'};
-        case 'post-infection':
-          return {'tag': 'Actions', 'id': 'actions'};
           break;
-        case 'postinfection':
-          return {'tag': 'Actions', 'id': 'actions'};
-          break;
-        case 'actions':
-          return {'tag': 'Actions', 'id': 'actions'};
+        case 'actions-on-objectives':
+          return { 'tag': 'Actions', 'id': 'actions' };
           break;
         case 'unknown':
         default:
           return {'tag': '', 'id': ''};
-
       }
     }
 
