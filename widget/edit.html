@@ -5,7 +5,7 @@ Copyright end -->
 <form data-ng-submit="save()" class="noMargin" name="killchainForm" data-ng-class="{'state-wait': processing }"
     novalidate>
     <div class="modal-header">
-        <h3 class="modal-title col-md-9">Add Killchain phases</h3>
+        <h3 class="modal-title col-md-9" data-ng-bind="::header"></h3>
         <button type="button" class="close" data-ng-click="cancel()" data-dismiss="modal" aria-label="Close"
             id="close-edit-widget-form-btn">
             <div aria-hidden="true" class="version-button">+</div>
@@ -24,7 +24,7 @@ Copyright end -->
             <div>
                 <div class="form-group"
                     data-ng-class="{ 'has-error': killchainForm.killchainData.$invalid && killchainForm.killchainData.$touched }">
-                    <label for="killchainData" class="control-label">Killchain Data JSON<span class="text-danger">*</span></label>
+                    <label for="killchainData" class="control-label">{{viewWidgetVars.LABEL_KILL_CHAIN_PHASES_JSON}}<span class="text-danger">*</span></label>
                     <div id="killchainData" data-cs-json-editor data-options="jsoneditorOptions" data-on-change="setkillchainData"
                         data-json="config.killchainDataJson" class="jinja-json-editor"></div>
                     <div data-cs-messages="killchainForm.killchainData"></div>
@@ -34,8 +34,8 @@ Copyright end -->
     </div>
     <div class="modal-footer">
         <button id="edit-widget-save" type="submit" class="btn btn-sm btn-primary"><i
-                class="icon icon-check margin-right-sm"></i>Save</button>
+                class="icon icon-check margin-right-sm"></i>{{'APP.BUTTON.SAVE' | translate}}</button>
         <button id="edit-widget-cancel" type="button" class="btn btn-sm btn-default" data-ng-click="cancel()"><i
-                class="icon icon-close margin-right-sm"></i>Close</button>
+                class="icon icon-close margin-right-sm"></i>{{'APP.BUTTON.CANCEL' | translate}}</button>
     </div>
 </form>

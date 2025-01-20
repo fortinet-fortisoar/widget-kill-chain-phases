@@ -34,12 +34,16 @@ Copyright end */
         widgetUtilityService.checkTranslationMode(widgetNameVersion).then(function () {
           $scope.viewWidgetVars = {
             // Create your translating static string variables here
+            HEADER_ADD_KILL_CHAIN_PHASES: widgetUtilityService.translate('killchainphases.HEADER_ADD_KILL_CHAIN_PHASES'),
+            HEADER_EDIT_KILL_CHAIN_PHASES: widgetUtilityService.translate('killchainphases.HEADER_EDIT_KILL_CHAIN_PHASES'),
+            LABEL_KILL_CHAIN_PHASES_JSON: widgetUtilityService.translate('killchainphases.LABEL_KILL_CHAIN_PHASES_JSON')
           };
+          $scope.header = $scope.config.title ? $scope.viewWidgetVars.HEADER_EDIT_KILL_CHAIN_PHASES : $scope.viewWidgetVars.HEADER_ADD_KILL_CHAIN_PHASES;
         });
       } else {
         $timeout(function () {
-          $scope.cancel();
-        });
+          cancel();
+        },100);
       }
     }
 
@@ -66,6 +70,11 @@ Copyright end */
     }
 
     function save() {
+      if (!$scope.killchainForm.$valid) {
+        $scope.killchainForm.$setTouched();
+        $scope.killchainForm.$focusOnFirstError();
+        return;
+      }
       $uibModalInstance.close($scope.config);
     }
 

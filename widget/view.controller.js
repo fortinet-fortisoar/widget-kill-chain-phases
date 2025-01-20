@@ -8,14 +8,16 @@ Copyright end */
     .module('cybersponse')
     .controller('killchainphases100Ctrl', killchainphases100Ctrl);
 
-  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService'];
+  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath'];
 
-  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService) {
+  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath) {
     var loadedSVGDocument;
     var svgLoaded = false;
     var fontFamily = '\'Lato\', sans-serif';
+    $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
-    var countColor = $scope.currentTheme === 'light' ? '#000000' : '#F4CC46';
+    $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages_light.svg" : $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages.svg";
+    var countColor = $scope.currentTheme === 'light' ? '#f4930f' : '#F4CC46';
     var labelColor = $scope.currentTheme === 'light' ? '#000000' : '#FFF';
 
     function _handleTranslations() {
