@@ -53,44 +53,51 @@ Copyright end */
       document.getElementById('topkillChainStagesSVG').addEventListener('load', function () {
         loadedSVGDocument = this.getSVGDocument();
         svgLoaded = true;
+        let killchainPhasesTag = [];
         $scope.topKillChainStages.forEach(element => {
           if($scope.config.moduleType==="Summary Data"){
             addLabelCounts(element);
           }
           addLabel(element);
+          if(element.count > 0){
+            killchainPhasesTag.push(element.id)
+          }
         });
         if($scope.config.moduleType==="Highlight Data"){
           fetchKillChainPhases($scope.config.resourceField);
+        }
+        else{
+          highlightKillChainPhases(killchainPhasesTag);
         }
       });
     }
 
     //map the killchain id to display the kill chain phases count
     function addLabelCounts(element) {
-      var source = loadedSVGDocument.getElementById(element.id);
-      source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
-      let bbox = source.getBBox();
-      let x = bbox.x;
-      let y = bbox.y;
-      let width = 300;
-      let height = bbox.height + 100;
-      let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
-      labelElem.setAttribute('x', x);
-      labelElem.setAttribute('y', y);
-      labelElem.setAttribute('width', width);
-      labelElem.setAttribute('height', height);
+        var source = loadedSVGDocument.getElementById(element.id);
+        source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
+        let bbox = source.getBBox();
+        let x = bbox.x;
+        let y = bbox.y;
+        let width = 300;
+        let height = bbox.height + 100;
+        let labelElem = document.createElementNS(source.namespaceURI, 'foreignObject');
+        labelElem.setAttribute('x', x);
+        labelElem.setAttribute('y', y);
+        labelElem.setAttribute('width', width);
+        labelElem.setAttribute('height', height);
 
-      var countDiv = document.createElement('div');
-      countDiv.setAttribute('class', element.id);
-      if ($scope.currentTheme === 'light') {
-        countDiv.setAttribute('style', 'color: ' + countColor + '; font-weight: bold; font-size: 16px;font-family:' + fontFamily + ';');
-      }
-      else {
-        countDiv.setAttribute('style', 'color: ' + countColor + '; font-weight: bold; font-size: 16px;font-family:' + fontFamily + ';');
-      }
-      countDiv.innerHTML = element.count;
-      labelElem.appendChild(countDiv);
-      source.after(labelElem);
+        var countDiv = document.createElement('div');
+        countDiv.setAttribute('class', element.id);
+        if ($scope.currentTheme === 'light') {
+          countDiv.setAttribute('style', 'color: ' + countColor + '; font-weight: bold; font-size: 16px;font-family:' + fontFamily + ';');
+        }
+        else {
+          countDiv.setAttribute('style', 'color: ' + countColor + '; font-weight: bold; font-size: 16px;font-family:' + fontFamily + ';');
+        }
+        countDiv.innerHTML = element.count;
+        labelElem.appendChild(countDiv);
+        source.after(labelElem);
     }
 
     //map the killchain id to display the kill chain phases
@@ -111,16 +118,16 @@ Copyright end */
       labelElem.setAttribute('width', width);
       labelElem.setAttribute('height', height);
 
-      var countDiv = document.createElement('div');
-      countDiv.setAttribute('class', element.id + '_Label');
+      var labelDiv = document.createElement('div');
+      labelDiv.setAttribute('class', element.id + '_Label');
       if ($scope.currentTheme === 'light') {
-        countDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
       else {
-        countDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
       }
-      countDiv.innerHTML = $filter('camelCaseToHuman')(element.tag);
-      labelElem.appendChild(countDiv);
+      labelDiv.innerHTML = $filter('camelCaseToHuman')(element.tag);
+      labelElem.appendChild(labelDiv);
       source.after(labelElem);
     }
 
