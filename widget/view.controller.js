@@ -8,9 +8,9 @@ Copyright end */
     .module('cybersponse')
     .controller('killchainphases100Ctrl', killchainphases100Ctrl);
 
-  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state'];
+  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state', '$sce', '$timeout'];
 
-  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state) {
+  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state, $sce, $timeout) {
     var loadedSVGDocument;
     var svgLoaded = false;
     $scope.pageState = $state;
@@ -18,7 +18,6 @@ Copyright end */
     $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
     $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages_light.svg" : $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages.svg";
-    $scope.detailSVGPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_phases_detail.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain_phases_detail.svg";
     $scope.noData = false;
 
     var countColor = $scope.currentTheme === 'light' ? '#f4930f' : '#F4CC46';
@@ -50,26 +49,36 @@ Copyright end */
     }
 
     function checkForSVGLoad() {
-      document.getElementById('topkillChainStagesSVG').addEventListener('load', function () {
-        loadedSVGDocument = this.getSVGDocument();
-        svgLoaded = true;
-        let killchainPhasesTag = [];
-        $scope.topKillChainStages.forEach(element => {
-          if($scope.config.moduleType==="Summary Data"){
-            addLabelCounts(element);
+      killchainPhasesService.loadSVG($scope.svgPath).then(function (response) {
+        $scope.svgContent = $sce.trustAsHtml(response.data);
+        $timeout(function () {
+          const svgEl = document.querySelector('#svg-container svg');
+          if (svgEl) {
+            loadedSVGDocument = svgEl;
+            svgLoaded = true;
+            initializeData();
           }
-          addLabel(element);
-          if(element.count > 0){
-            killchainPhasesTag.push(element.id)
-          }
-        });
-        if($scope.config.moduleType==="Highlight Data"){
-          fetchKillChainPhases($scope.config.resourceField);
+        }, 0);
+      });
+    }
+
+    function initializeData() {
+      let killchainPhasesTag = [];
+      $scope.topKillChainStages.forEach(element => {
+        if ($scope.config.moduleType === "Summary Data") {
+          addLabelCounts(element);
         }
-        else{
-          highlightKillChainPhases(killchainPhasesTag);
+        addLabel(element);
+        if (element.count > 0) {
+          killchainPhasesTag.push(element.id)
         }
       });
+      if ($scope.config.moduleType === "Highlight Data") {
+        fetchKillChainPhases($scope.config.resourceField);
+      }
+      else {
+        highlightKillChainPhases(killchainPhasesTag);
+      }
     }
 
     //map the killchain id to display the kill chain phases count
