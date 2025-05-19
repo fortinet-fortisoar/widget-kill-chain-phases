@@ -20,9 +20,7 @@ Copyright end -->
             <span class="noInformation">{{viewWidgetVars.ERROR_NO_INFORMATION_AVAILABLE}}</span>
         </div>
         <div id="svg-container" class="svgContainer">
-            <object class="padding-bottom-lg"
-                data="{{svgPath}}"
-                id="topkillChainStagesSVG" alt="kill chain stages"></object>
+                <div id="topkillChainStagesSVG" ng-bind-html="svgContent"></div>
         </div>
     </div>
 </div>
