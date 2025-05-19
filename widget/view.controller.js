@@ -18,7 +18,6 @@ Copyright end */
     $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
     $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages_light.svg" : $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages.svg";
-    //$scope.detailSVGPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_phases_detail.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain_phases_detail.svg";
     $scope.noData = false;
 
     var countColor = $scope.currentTheme === 'light' ? '#f4930f' : '#F4CC46';
