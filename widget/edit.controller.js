@@ -38,7 +38,7 @@ Copyright end */
             HEADER_ADD_KILL_CHAIN_PHASES: widgetUtilityService.translate('killchainphases.HEADER_ADD_KILL_CHAIN_PHASES'),
             HEADER_EDIT_KILL_CHAIN_PHASES: widgetUtilityService.translate('killchainphases.HEADER_EDIT_KILL_CHAIN_PHASES'),
             LABEL_KILL_CHAIN_PHASES_JSON: widgetUtilityService.translate('killchainphases.LABEL_KILL_CHAIN_PHASES_JSON'),
-            LABEL_NOT_CONFIGURABLE: widgetUtilityService.translate('customTags.LABEL_NOT_CONFIGURABLE')
+            LABEL_NOT_CONFIGURABLE: widgetUtilityService.translate('killchainphases.LABEL_NOT_CONFIGURABLE')
           };
           $scope.header = $scope.config.title ? $scope.viewWidgetVars.HEADER_EDIT_KILL_CHAIN_PHASES : $scope.viewWidgetVars.HEADER_ADD_KILL_CHAIN_PHASES;
           loadModules();
