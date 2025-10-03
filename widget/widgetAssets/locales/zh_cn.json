@@ -1,0 +1,9 @@
+{
+    "killchainphases": {
+        "ERROR_NO_INFORMATION_AVAILABLE": "暂无信息",
+        "HEADER_ADD_KILL_CHAIN_PHASES": "添加杀伤链阶段",
+        "HEADER_EDIT_KILL_CHAIN_PHASES": "编辑杀伤链阶段",
+        "LABEL_KILL_CHAIN_PHASES_JSON": "杀伤链阶段 JSON",
+        "LABEL_NOT_CONFIGURABLE": "此小部件是捆绑提供的，无法单独使用。"
+    }    
+}
