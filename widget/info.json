@@ -2,7 +2,7 @@
     "name": "killchainphases",
     "title": "Kill Chain Phases",
     "subTitle": "Indicator kill chain phases",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "published_date": 1731487820,
     "releaseNotes": "unavailable",
     "metadata": {
@@ -18,7 +18,8 @@
         "category": [
             "Threat Intelligence",
             "Vulnerability and Risk Management"
-        ]
+        ],
+        "help_online": "https://github.com/fortinet-fortisoar/solution-pack-threat-intel-management/blob/release/3.0.0/README.md"
     },
     "development": false
 }

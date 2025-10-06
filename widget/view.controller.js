@@ -6,11 +6,11 @@ Copyright end */
 (function () {
   angular
     .module('cybersponse')
-    .controller('killchainphases100Ctrl', killchainphases100Ctrl);
+    .controller('killchainphases110Ctrl', killchainphases110Ctrl);
 
-  killchainphases100Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state', '$sce', '$timeout'];
+  killchainphases110Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state', '$sce', '$timeout'];
 
-  function killchainphases100Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state, $sce, $timeout) {
+  function killchainphases110Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state, $sce, $timeout) {
     var loadedSVGDocument;
     var svgLoaded = false;
     $scope.pageState = $state;

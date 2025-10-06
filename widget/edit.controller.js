@@ -6,11 +6,11 @@ Copyright end */
 (function () {
   angular
     .module('cybersponse')
-    .controller('editKillchainphases100Ctrl', editKillchainphases100Ctrl);
+    .controller('editKillchainphases110Ctrl', editKillchainphases110Ctrl);
 
-  editKillchainphases100Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout', 'appModulesService', 'modelMetadatasService', 'Entity'];
+  editKillchainphases110Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout', 'appModulesService', 'modelMetadatasService', 'Entity'];
 
-  function editKillchainphases100Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, modelMetadatasService, Entity) {
+  function editKillchainphases110Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, modelMetadatasService, Entity) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;
