@@ -1,16 +1,16 @@
 /* Copyright start
     MIT License
-    Copyright (c) 2025 Fortinet Inc
+    Copyright (c) 2026 Fortinet Inc
 Copyright end */
 'use strict';
 (function () {
   angular
     .module('cybersponse')
-    .controller('editKillchainphases110Ctrl', editKillchainphases110Ctrl);
+    .controller('editKillchainphases200Ctrl', editKillchainphases200Ctrl);
 
-  editKillchainphases110Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout', 'appModulesService', 'modelMetadatasService', 'Entity'];
+  editKillchainphases200Ctrl.$inject = ['$scope', '$uibModalInstance', 'config', 'widgetUtilityService', '$timeout', 'appModulesService', 'modelMetadatasService', 'Entity'];
 
-  function editKillchainphases110Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, modelMetadatasService, Entity) {
+  function editKillchainphases200Ctrl($scope, $uibModalInstance, config, widgetUtilityService, $timeout, appModulesService, modelMetadatasService, Entity) {
     $scope.cancel = cancel;
     $scope.save = save;
     $scope.config = config;

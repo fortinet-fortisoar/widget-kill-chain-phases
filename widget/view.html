@@ -1,9 +1,10 @@
 <!-- Copyright start
     MIT License
-    Copyright (c) 2025 Fortinet Inc
+    Copyright (c) 2026 Fortinet Inc
 Copyright end -->
 
-<div class="widget widget-container chart">
+<div class="widget widget-container chart"
+    data-ng-class="{'light': currentTheme === 'light', 'dark': currentTheme === 'dark', 'steel': currentTheme === 'steel'}">
     <div class="display-flex-space-between margin-chart">
         <div class="padding-right-0 padding-left-0 widget-dashboard-title-width custom-label-size padding-0"
             data-ng-class="(page === 'dashboard' || page === 'reporting') ? 'widget-dashboard-title-width' : 'widget-title-width'">
@@ -15,12 +16,35 @@ Copyright end -->
                 data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
         </div>
     </div>
-    <div data-ng-hide="collapsed">
+    <div data-ng-hide="collapsed" data-ng-class="{'killchain-content-wrapper margin-bottom-md': showMetrics }">
         <div data-ng-if="noData" class="font-09em padding-lg">
             <span class="noInformation">{{viewWidgetVars.ERROR_NO_INFORMATION_AVAILABLE}}</span>
         </div>
         <div id="svg-container" class="svgContainer">
-                <div id="topkillChainStagesSVG_{{ config.wid }}" ng-bind-html="svgContent"></div>
+            <div id="topkillChainStagesSVG_{{ config.wid }}" class="kill-chain-svg-wrapper" ng-bind-html="svgContent">
+            </div>
+        </div>  
+        <div class="killchain-sections" data-ng-if="showMetrics">
+            <div class="killchain-section" ng-repeat="section in killChainSections"
+                ng-class="{ active: (activePhase === section.id) || (activePhases[section.id]) }">
+        
+                <!-- TOP PROGRESS BAR -->
+                <div class="phase-progress">
+                    <div class="phase-progress-bar" ng-style="{ width: section.progressPercent + '%', background: section.progressColor }">
+                    </div>
+                </div>
+        
+                <!-- METRICS -->
+                <div class="section-metrics">
+                    <div class="metric" ng-repeat="metric in section.metrics">
+                        <div class="metric-label">{{ metric.category }}</div>
+                        <div class="metric-value">
+                            {{ metric.Count | numberToDisplay }}
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
         </div>
     </div>
 </div>
