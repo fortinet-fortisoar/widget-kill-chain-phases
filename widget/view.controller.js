@@ -1,24 +1,47 @@
 /* Copyright start
     MIT License
-    Copyright (c) 2025 Fortinet Inc
+    Copyright (c) 2026 Fortinet Inc
 Copyright end */
 'use strict';
 (function () {
   angular
     .module('cybersponse')
-    .controller('killchainphases110Ctrl', killchainphases110Ctrl);
+    .controller('killchainphases200Ctrl', killchainphases200Ctrl);
 
-  killchainphases110Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state', '$sce', '$timeout'];
+  killchainphases200Ctrl.$inject = ['$scope', 'widgetUtilityService', '$filter', '$rootScope', 'killchainPhasesService', 'widgetBasePath', 'modelMetadatasService', '$state', '$sce', '$timeout'];
 
-  function killchainphases110Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state, $sce, $timeout) {
+  function killchainphases200Ctrl($scope, widgetUtilityService, $filter, $rootScope, killchainPhasesService, widgetBasePath, modelMetadatasService, $state, $sce, $timeout) {
     var loadedSVGDocument;
     var svgLoaded = false;
+    $scope.showMetrics = false;
     $scope.pageState = $state;
     var fontFamily = '\'Lato\', sans-serif';
     $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
-    $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages_light.svg" : $scope.widgetBasePath + "widgetAssets/images/top_kill_chain_stages.svg";
-    $scope.noData = false;
+    $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
+    const THEME_COLORS = {
+      light: {
+        active: '#4676b2',
+        defaultFill: '#959393'
+      },
+      steel: {
+        active: '#22a6af',
+        defaultFill: '#3E3E3E'
+      },
+      dark: {
+        active: '#2cafc3',
+        defaultFill: '#3E3E3E'
+      }
+    };
+
+    // Fallback to dark if theme not found
+    const colors = THEME_COLORS[$scope.currentTheme] || THEME_COLORS.dark;
+
+    const activeColor = colors.active;
+    const defaultFill = colors.defaultFill;
+
+    $scope.activePhases = {};
+    $scope.hoveredPhase = null;
 
     var countColor = $scope.currentTheme === 'light' ? '#f4930f' : '#F4CC46';
     var labelColor = $scope.currentTheme === 'light' ? '#000000' : '#FFF';
@@ -57,6 +80,9 @@ Copyright end */
             loadedSVGDocument = svgEl;
             svgLoaded = true;
             initializeData();
+            if(!$scope.config.resource) {
+              attachHoverHandlers();
+            }
           }
         }, 0);
       });
@@ -112,6 +138,10 @@ Copyright end */
     //map the killchain id to display the kill chain phases
     function addLabel(element) {
       var source = loadedSVGDocument.getElementById(element.id + '_Label');
+      if($scope.config.resource) {
+        const lineEl = loadedSVGDocument.getElementById(`${element.id}_Line`);
+        lineEl.style.display = 'none';
+      }
       source.setAttribute('style', 'font-family:\'Lato\', sans-serif;');
       let bbox = source.getBBox();
       let x = bbox.x;
@@ -130,10 +160,18 @@ Copyright end */
       var labelDiv = document.createElement('div');
       labelDiv.setAttribute('class', element.id + '_Label');
       if ($scope.currentTheme === 'light') {
-        labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        if($scope.showMetrics) {
+          labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px; margin-top: -4px; font-family:' + fontFamily + ';');
+        }else {
+          labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 20px; padding-top: 20px; font-family:' + fontFamily + ';');
+        }
       }
       else {
-        labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px;font-family:' + fontFamily + ';');
+        if($scope.showMetrics) {
+          labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 16px; margin-top: -4px; font-family:' + fontFamily + ';');
+        }else {
+          labelDiv.setAttribute('style', 'color: ' + labelColor + '; font-size: 20px; padding-top: 20px; font-family:' + fontFamily + ';');
+        }
       }
       labelDiv.innerHTML = $filter('camelCaseToHuman')(element.tag);
       labelElem.appendChild(labelDiv);
@@ -142,13 +180,75 @@ Copyright end */
 
     function highlightKillChainPhases(_data){
         _data.forEach(element =>  {
-          const glowElement = element.toLowerCase() + '_glow';
-          const elementId = loadedSVGDocument.getElementById(glowElement);
-          if (elementId) {
-            elementId.setAttribute('style', 'display:block');
+          const parentElementId = loadedSVGDocument.getElementById(element.toLowerCase());
+          const parentElementCountId = loadedSVGDocument.getElementById(element.toLowerCase() + '_count');
+          if (parentElementId) {
+            parentElementId.setAttribute('fill', activeColor);
+            parentElementCountId.setAttribute('fill', activeColor);
           }
         });  
     }
+
+    function attachHoverHandlers() {
+      $scope.killChainSections.forEach(function (section) {
+        const el = loadedSVGDocument.getElementById(section.id);
+        const count_el = loadedSVGDocument.getElementById(section.id + '_count');
+        const el_Line = loadedSVGDocument.getElementById(section.id + '_Line');
+        if (!el) return;
+        $scope.svgPhaseElements = $scope.svgPhaseElements || {};
+        $scope.svgPhaseElements[section.id] = { el, count_el, el_Line };
+
+        // mouse enter
+        el.addEventListener('mouseenter', function () {
+          $scope.hoveredPhase = section.id;
+          $scope.activePhase = section.id;
+          el.setAttribute('fill', activeColor);
+          count_el.setAttribute('fill', activeColor);
+          el_Line.setAttribute('stroke', activeColor);
+          $scope.$applyAsync();
+        });
+
+        // mouse leave
+        el.addEventListener('mouseleave', function () {
+          $scope.hoveredPhase = null;
+
+          // revert only if NOT active
+          if (!$scope.activePhases[section.id]) {
+            el.setAttribute('fill', defaultFill);
+            count_el.setAttribute('fill', defaultFill);
+            el_Line.setAttribute('stroke', defaultFill);
+          } else {
+            el.setAttribute('fill', activeColor);
+            count_el.setAttribute('fill', activeColor);
+            el_Line.setAttribute('stroke', activeColor);
+          }
+
+          $scope.activePhase = null;
+          $scope.$applyAsync();
+        });
+
+        // mouse click
+        el.addEventListener('click', function () {
+          const wasActive = !$scope.activePhases[section.id];
+          Object.keys($scope.activePhases).forEach(id => {
+            const elems = $scope.svgPhaseElements[id];
+            if (elems) {
+              elems.el.setAttribute('fill', defaultFill);
+              elems.count_el.setAttribute('fill', defaultFill);
+              elems.el_Line.setAttribute('stroke', defaultFill);
+            }
+          });
+          $scope.activePhases = {};
+          $scope.activePhases[section.id] = wasActive;
+          el.setAttribute('fill', activeColor);
+          count_el.setAttribute('fill', activeColor);
+          el_Line.setAttribute('stroke', activeColor);
+          $scope.$applyAsync();
+       });
+
+      });
+    }
+
     
     function fetchKillChainPhases(_fields){ 
       let moduleMetaData = modelMetadatasService.getMetadataByModuleType($scope.config.resource);
@@ -163,18 +263,38 @@ Copyright end */
       });
     }
 
+    function getProgressColor(percent) {
+      if (percent <= 25) {
+        return '#28B35C';
+      }
+      if (percent <= 50) {
+        return '#D2AC1A';
+      }
+      if (percent <= 75) {
+        return '#DE7A13';
+      }
+      return '#e31b1d';
+    }
+
     function init() {
       // To handle backward compatibility for widget
       _handleTranslations();
       checkCurrentPage($scope.pageState);
       $scope.noData = false;
+      $scope.showMetrics = $scope.config.showMetrics ? $scope.config.showMetrics : false;
       if ($scope.config.embedded) { //display the data if widget is embedded
         $scope.embedded = true;
       }
       else { //display the data from widget config 
         $scope.embedded = false;
       }
-      if($scope.config.moduleType==="Summary Data"){ //to map kill chain phases count data
+      if($scope.showMetrics) {
+        $scope.killChainSections = $scope.config.data;
+        $scope.killChainSections.forEach(section => {
+          section.progressColor = getProgressColor(section.progressPercent);
+        });
+      }
+      if(!$scope.showMetrics && $scope.config.moduleType==="Summary Data"){ //to map kill chain phases count data
         if($scope.config.killchainDataJson){
           $scope.topKillChainStages = mapKillChainStagesData($scope.config.killchainDataJson);     
         }

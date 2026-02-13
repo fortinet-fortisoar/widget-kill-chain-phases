@@ -1,10 +1,213 @@
 /* Copyright start
-    MIT License
-    Copyright (c) 2025 Fortinet Inc
+   MIT License
+   Copyright (c) 2026 Fortinet Inc
 Copyright end */
 
-/* SVG styles for responsive scaling */
+
+/* =========================================================
+   BASE STYLES (THEME INDEPENDENT)
+   ========================================================= */
+
+/* SVG styles */
 .svgContainer object {
-  width: 100%; /* SVG width will scale to fill the container */
-  height: 100%; /* SVG height will scale to fill the container */
+  width: 100%;
+  height: 100%;
+}
+
+.killchain-content-wrapper {
+  margin: 0 auto;
+}
+
+.svgContainer svg {
+  width: 97%;
+  height: auto;
+}
+
+.svgContainer svg path {
+  cursor: pointer;
+  transition: fill 0.2s ease;
+}
+
+.kill-chain-svg-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sections container */
+.killchain-sections {
+  display: flex;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Section */
+.killchain-section {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding: 14px 0 12px;
+  height: 200px;
+  overflow-y: auto;
+  transition: background 0.2s ease;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* First section should not have left border */ 
+.killchain-section:first-child { 
+  border-left: 1px solid; 
+}
+
+/* Metrics */
+.section-metrics {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric {
+  padding: 6px 0;
+  border-bottom: 1px solid;
+}
+
+.metric:last-child {
+  border-bottom: none;
+}
+
+.metric-label {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.metric-value {
+  font-size: 16px;
+  padding-bottom: 5px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TOP PROGRESS BAR (PHASE INTENSITY)
+   ========================================================= */
+
+.phase-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.phase-progress-bar {
+  height: 4px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+   ========================================================= */
+
+.light .killchain-section {
+  color: #000;
+  border-color: #CFD8DC;
+  background: #ffffff;
+}
+
+.light .metric {
+  border-bottom-color: #CFD8DC;
+}
+
+.light .phase-progress-bar {
+  background: #f4c430;
+}
+
+.light .killchain-section.active,
+.light .killchain-section.hovered {
+  background: #4676b2;
+  color: #ffffff;
+}
+
+.light .killchain-section.active .phase-progress-bar,
+.light .killchain-section.hovered .phase-progress-bar {
+  background: #ffffff;
+}
+
+.light svg path.active,
+.light svg path.hovered {
+  fill: #4676b2;
+}
+
+
+/* =========================================================
+   STEEL THEME
+   ========================================================= */
+
+.steel .killchain-section {
+  color: #e5f6f7;
+  border-color: #10171e;
+  background: #1b2430;
+}
+
+.steel .metric {
+  border-bottom-color: #10171e;
+}
+
+.steel .phase-progress-bar {
+  background: #f4c430;
+}
+
+.steel .killchain-section.active,
+.steel .killchain-section.hovered {
+  background: #22a6af;
+  color: #ffffff;
+}
+
+.steel .killchain-section.active .phase-progress-bar,
+.steel .killchain-section.hovered .phase-progress-bar {
+  background: #ffffff;
+}
+
+.steel svg path.active,
+.steel svg path.hovered {
+  fill: #22a6af;
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+.dark .killchain-section {
+  color: #f1f1f1;
+  border-color: #10171e;
+  background: #1c1f26;
+}
+
+.dark .metric {
+  border-bottom-color: #10171e;
+}
+
+.dark .phase-progress-bar {
+  background: #f4c430;
+}
+
+.dark .killchain-section.active,
+.dark .killchain-section.hovered {
+  background: #2cafc3;
+  color: #ffffff;
+}
+
+.dark .killchain-section.active .phase-progress-bar,
+.dark .killchain-section.hovered .phase-progress-bar {
+  background: #ffffff;
+}
+
+.dark svg path.active,
+.dark svg path.hovered {
+  fill: #2cafc3;
 }
