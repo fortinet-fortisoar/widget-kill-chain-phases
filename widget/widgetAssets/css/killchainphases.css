@@ -184,12 +184,12 @@ Copyright end */
 
 .dark .killchain-section {
   color: #f1f1f1;
-  border-color: #10171e;
-  background: #1c1f26;
+  border-color: #202020;
+  background: #161616;
 }
 
 .dark .metric {
-  border-bottom-color: #10171e;
+  border-bottom-color: #202020;
 }
 
 .dark .phase-progress-bar {
@@ -210,4 +210,38 @@ Copyright end */
 .dark svg path.active,
 .dark svg path.hovered {
   fill: #2cafc3;
+}
+
+/* =========================================================
+   blue THEME
+   ========================================================= */
+
+.blue .killchain-section {
+  color: #f1f1f1;
+  border-color: #1a2032;
+  background: #0e1629;
+}
+
+.blue .metric {
+  border-bottom-color: #1a2032;
+}
+
+.blue .phase-progress-bar {
+  background: #f4c430;
+}
+
+.blue .killchain-section.active,
+.blue .killchain-section.hovered {
+  background: #497AD4;
+  color: #ffffff;
+}
+
+.blue .killchain-section.active .phase-progress-bar,
+.blue .killchain-section.hovered .phase-progress-bar {
+  background: #ffffff;
+}
+
+.blue svg path.active,
+.blue svg path.hovered {
+  fill: #497AD4;
 }

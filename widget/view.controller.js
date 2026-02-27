@@ -18,7 +18,14 @@ Copyright end */
     var fontFamily = '\'Lato\', sans-serif';
     $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
-    $scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
+    //$scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
+    if($scope.currentTheme === 'light') {
+      $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg";
+    }else if($scope.currentTheme === 'steel' || $scope.currentTheme === 'dark') {
+      $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
+    }else if($scope.currentTheme === 'blue') {
+      $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain_blue.svg";
+    }
     const THEME_COLORS = {
       light: {
         active: '#4676b2',
@@ -31,6 +38,10 @@ Copyright end */
       dark: {
         active: '#2cafc3',
         defaultFill: '#3E3E3E'
+      },
+      blue: {
+        active: '#497AD4',
+        defaultFill: '#1F263B'
       }
     };
 
@@ -226,25 +237,6 @@ Copyright end */
           $scope.activePhase = null;
           $scope.$applyAsync();
         });
-
-        // mouse click
-        el.addEventListener('click', function () {
-          const wasActive = !$scope.activePhases[section.id];
-          Object.keys($scope.activePhases).forEach(id => {
-            const elems = $scope.svgPhaseElements[id];
-            if (elems) {
-              elems.el.setAttribute('fill', defaultFill);
-              elems.count_el.setAttribute('fill', defaultFill);
-              elems.el_Line.setAttribute('stroke', defaultFill);
-            }
-          });
-          $scope.activePhases = {};
-          $scope.activePhases[section.id] = wasActive;
-          el.setAttribute('fill', activeColor);
-          count_el.setAttribute('fill', activeColor);
-          el_Line.setAttribute('stroke', activeColor);
-          $scope.$applyAsync();
-       });
 
       });
     }
