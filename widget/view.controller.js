@@ -238,6 +238,25 @@ Copyright end */
           $scope.$applyAsync();
         });
 
+        // mouse click
+        el.addEventListener('click', function () {
+          const wasActive = !$scope.activePhases[section.id];
+          Object.keys($scope.activePhases).forEach(id => {
+            const elems = $scope.svgPhaseElements[id];
+            if (elems) {
+              elems.el.setAttribute('fill', defaultFill);
+              elems.count_el.setAttribute('fill', defaultFill);
+              elems.el_Line.setAttribute('stroke', defaultFill);
+            }
+          });
+          $scope.activePhases = {};
+          $scope.activePhases[section.id] = wasActive;
+          el.setAttribute('fill', activeColor);
+          count_el.setAttribute('fill', activeColor);
+          el_Line.setAttribute('stroke', activeColor);
+          $scope.$applyAsync();
+       });
+
       });
     }
 
