@@ -18,7 +18,6 @@ Copyright end */
     var fontFamily = '\'Lato\', sans-serif';
     $scope.widgetBasePath = widgetBasePath;
     $scope.currentTheme = $rootScope.theme.id;
-    //$scope.svgPath =  $scope.currentTheme === 'light'  ? $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg" : $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
     if($scope.currentTheme === 'light') {
       $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg";
     }else if($scope.currentTheme === 'steel' || $scope.currentTheme === 'dark') {
@@ -275,13 +274,10 @@ Copyright end */
     }
 
     function getProgressColor(percent) {
-      if (percent <= 25) {
-        return '#28B35C';
-      }
-      if (percent <= 50) {
+      if (percent <= 33) {
         return '#D2AC1A';
       }
-      if (percent <= 75) {
+      if (percent <= 66) {
         return '#DE7A13';
       }
       return '#e31b1d';
