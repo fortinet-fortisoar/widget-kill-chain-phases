@@ -35,13 +35,17 @@ Copyright end -->
                 </div>
         
                 <!-- METRICS -->
-                <div class="section-metrics">
+                <div class="section-metrics" data-ng-if="section.metrics.length > 0 ">
                     <div class="metric" ng-repeat="metric in section.metrics">
                         <div class="metric-label">{{ metric.Threat_category }}</div>
                         <div class="metric-value">
                             {{ metric.Count | numberToDisplay }}
                         </div>
                     </div>
+                </div>
+
+                <div data-ng-if="!section.metrics || section.metrics.length === 0" class="watermark">
+                    {{ ::'APP.MESSAGE.NO_RESULTS' | translate }}
                 </div>
         
             </div>
