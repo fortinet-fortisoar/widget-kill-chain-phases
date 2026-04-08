@@ -22,7 +22,7 @@ Copyright end */
       $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain_light.svg";
     }else if($scope.currentTheme === 'steel' || $scope.currentTheme === 'dark') {
       $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain.svg";
-    }else if($scope.currentTheme === 'blue') {
+    }else if($scope.currentTheme === 'deepSea') {
       $scope.svgPath = $scope.widgetBasePath + "widgetAssets/images/kill_chain_blue.svg";
     }
     const THEME_COLORS = {
@@ -38,7 +38,7 @@ Copyright end */
         active: '#2cafc3',
         defaultFill: '#3E3E3E'
       },
-      blue: {
+      deepSea: {
         active: '#497AD4',
         defaultFill: '#1F263B'
       }
