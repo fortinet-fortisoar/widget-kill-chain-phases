@@ -3,7 +3,7 @@
     Copyright (c) 2026 Fortinet Inc
 Copyright end -->
 
-<div class="widget widget-container chart"
+<div class="widget-container chart"
     data-ng-class="{'light': currentTheme === 'light', 'dark': currentTheme === 'dark', 'steel': currentTheme === 'steel', 'blue': currentTheme === 'deepSea'}">
     <div class="display-flex-space-between margin-chart">
         <div class="padding-right-0 padding-left-0 widget-dashboard-title-width custom-label-size padding-0"
@@ -16,7 +16,7 @@ Copyright end -->
                 data-ng-class="{'fa-caret-up': !collapsed, 'fa-caret-down': collapsed}"></span>
         </div>
     </div>
-    <div data-ng-hide="collapsed" data-ng-class="{'killchain-content-wrapper margin-bottom-md': showMetrics }">
+    <div data-ng-hide="collapsed" data-ng-class="{'killchain-content-wrapper': showMetrics }">
         <div data-ng-if="noData" class="font-09em padding-lg">
             <span class="noInformation">{{viewWidgetVars.ERROR_NO_INFORMATION_AVAILABLE}}</span>
         </div>
